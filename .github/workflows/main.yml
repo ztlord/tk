@@ -18,19 +18,13 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Dar permisos a gradlew
-        run: chmod +x gradlew
-
-      - name: Cache de Gradle
-        uses: actions/cache@v4
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
         with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          gradle-version: '8.2'
 
       - name: Compilar APK debug
-        run: ./gradlew assembleDebug
+        run: gradle assembleDebug
 
       - name: Subir APK
         uses: actions/upload-artifact@v4
